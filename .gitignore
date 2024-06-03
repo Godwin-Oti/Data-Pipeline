@@ -1,0 +1,21 @@
+# Ignore .env files
+.env
+
+
+# Ignore the .streamlit/secrets.toml file to keep secrets secure
+.streamlit/secrets.toml
+
+# Ignore Python bytecode files
+__pycache__/
+*.py[cod]
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore virtual environment directories
+venv/
+env/

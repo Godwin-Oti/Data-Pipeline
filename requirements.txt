@@ -1,0 +1,7 @@
+streamlit
+psycopg2
+sqlalchemy
+pandas
+requests
+python-dotenv
+beautifulsoup4
