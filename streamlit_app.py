@@ -1,5 +1,5 @@
 import streamlit as st
-import psycopg2
+from psycopg2 import sql
 from sqlalchemy import create_engine
 import os
 import pandas as pd
