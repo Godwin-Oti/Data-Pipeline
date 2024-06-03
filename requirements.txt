@@ -5,3 +5,5 @@ pandas
 requests
 python-dotenv
 beautifulsoup4
+plotly.express
+datetime

@@ -2,9 +2,6 @@
 .env
 
 
-# Ignore the .streamlit/secrets.toml file to keep secrets secure
-.streamlit/secrets.toml
-
 # Ignore Python bytecode files
 __pycache__/
 *.py[cod]
