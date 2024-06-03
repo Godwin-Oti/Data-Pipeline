@@ -14,7 +14,7 @@ load_dotenv()
 # Function to connect to the Database
 def get_connection():
     # Use st.secrets to get the DATABASE_URL
-    DATABASE_URL = st.secrets["DataBase_Url"]["url"]
+    DATABASE_URL = st.secrets["DataBase_Url"]
     # Create an engine instance
     engine = create_engine(DATABASE_URL)
     return engine
