@@ -49,7 +49,7 @@ date_range = st.slider("Select Date Range", min_date, max_date, (min_date, max_d
 filtered_df = merged_df[(merged_df['date'] >= pd.to_datetime(date_range[0])) & (merged_df['date'] <= pd.to_datetime(date_range[1]))]
 
 # Creating a Plotly line chart with tooltips for news
-fig = px.line(filtered_df, x='date', y='close', title='Prices for BTC', labels={'close': 'BTC Price'})
+fig = px.line(filtered_df, x='date', y='close', title='Bitcoin Prices', labels={'close': 'BTC Price'})
 
 # Add hover data for news headlines
 fig.update_traces(mode='lines+markers', hovertemplate='<b>Date</b>: %{x}<br><b>Price</b>: %{y}<br><b>News</b>: %{customdata[0]}')
