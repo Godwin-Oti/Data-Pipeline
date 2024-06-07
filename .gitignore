@@ -16,3 +16,9 @@ Thumbs.db
 # Ignore virtual environment directories
 venv/
 env/
+
+scrappy.py
+Ethereum_api.py
+eth_scrappy.py
+Crop.py
+streamlit.ipynb
