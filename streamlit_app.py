@@ -22,7 +22,7 @@ def fetch_bitcoin_data(engine):
 
 # Function to fetch bitcoin news from Database
 def fetch_bitcoin_news(engine):
-    query = "SELECT * FROM bitcoin_news_update ORDER BY date"
+    query = "SELECT date, title FROM bitcoin_news_update ORDER BY date"  # Removed 'description' column from the query
     df = pd.read_sql_query(query, engine)
     return df
 
@@ -54,7 +54,7 @@ filtered_df = merged_df[(merged_df['date'] >= pd.to_datetime(date_range[0])) & (
 st.title("Bitcoin Dashboard")
 
 # Tabs for organizing content
-tab1, tab2, tab3 = st.tabs(["Price Chart", "Candlestick Chart", "Additional Analysis"])
+tab1, tab2, tab3 = st.columns(3)
 
 with tab1:
     # Creating a Plotly line chart with tooltips for news
@@ -66,7 +66,7 @@ with tab1:
     
     # Displaying the dataframe with bitcoin news
     st.subheader("Bitcoin News")
-    st.write(filtered_df[['date', 'title', 'description']])
+    st.write(filtered_df[['date', 'title']])
 
 with tab2:
     # Candlestick Chart
@@ -78,6 +78,7 @@ with tab2:
                                                      close=filtered_df['close'])])
     fig_candlestick.update_layout(xaxis_title='Date', yaxis_title='Price')
     st.plotly_chart(fig_candlestick)
+
 
     # Volume Chart
     st.subheader("Bitcoin Trading Volume")
