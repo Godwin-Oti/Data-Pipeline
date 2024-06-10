@@ -70,12 +70,12 @@ with tab1:
     st.markdown(
         """
         <style>
-        .dataframe { width: 1000px !important; }
+        .dataframe { width: 1300px !important; }
         </style>
         """,
         unsafe_allow_html=True
     )
-    st.dataframe(filtered_df[['date', 'title']], height=600)  # Increased height to 600 pixels
+    st.dataframe(filtered_df[['date', 'title']], height=500)  # Increased height to 600 pixels
 
 with tab2:
     # Candlestick Chart
