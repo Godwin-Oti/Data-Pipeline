@@ -75,7 +75,7 @@ with tab1:
         """,
         unsafe_allow_html=True
     )
-    st.dataframe(filtered_df[['date', 'title']], height=500)  # Increased height to 600 pixels
+    st.dataframe(filtered_df[['date', 'title']])  
 
 with tab2:
     # Candlestick Chart
