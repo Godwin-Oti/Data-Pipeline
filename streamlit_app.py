@@ -68,15 +68,8 @@ with tab1:
     # Displaying the dataframe with bitcoin news
     st.subheader("Bitcoin News")
     # Adding custom CSS to increase table width
-    st.markdown(
-        """
-        <style>
-        .dataframe { width: 1200px !important; }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-    st.write(filtered_df[['date', 'title']])  # Increased height to 600 pixels
+    
+    st.dataframe(filtered_df[['date', 'title']],width=1000)  # Increased width to 1000 pixels
 
 with tab2:
     # Candlestick Chart
