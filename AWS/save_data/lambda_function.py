@@ -17,14 +17,14 @@ def save_bitcoin_data(event, context):
         cursor = conn.cursor()
         
         # Print the incoming event body for debugging
-        print(f"Incoming event body: {event['body']}")
+        #print(f"Incoming event body: {event['body']}")
         
         # Parse the incoming event
-        data = json.loads(event['body'])
+        data = json.loads(event['responsePayload']['body'])
         
         for date, values in data.items():
             cursor.execute('''
-                INSERT INTO Bitcoin_Prices_Update(Date, Open, High, Low, Close, Volume)
+                INSERT INTO bitcoin_prices_aws(Date, Open, High, Low, Close, Volume)
                 Values(%s, %s, %s, %s, %s, %s)
                 ON CONFLICT (Date) DO NOTHING
                 ''', (date, values['1. open'], values['2. high'], values['3. low'], values['4. close'], values['5. volume']))
@@ -33,7 +33,7 @@ def save_bitcoin_data(event, context):
         cursor.close()
         return {
             'statusCode': 200,
-            'body': json.dumps('Success')
+            'body': json.dumps('Successssssssss')
         }
     except json.JSONDecodeError as e:
         print(f'JSON decode error: {e}')

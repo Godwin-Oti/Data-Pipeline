@@ -1,10 +1,6 @@
 import json
 import os
 import psycopg2
-from dotenv import load_dotenv
-
-# Load environment variables from .env file
-load_dotenv()
 
 # Database connection parameters
 DATABASE_URL = os.getenv('DATABASE_URL')
@@ -14,30 +10,51 @@ def save_bitcoin_news(event, context):
         # Connect to the database
         conn = psycopg2.connect(DATABASE_URL)
         
-        # Parse the input data (assuming it's JSON)
-        data = json.loads(event['body'])
+        # Parse the incoming event
+        try:
+            #data = json.loads(event['body'])
+            data = json.loads(event['responsePayload']['body'])
+            print("Data parsed successfully:", data)
+        except Exception as e:
+            print(f'Error parsing JSON data: {e}')
+            return {
+                'statusCode': 400,
+                'body': json.dumps(f'Error parsing JSON data: {e}')
+            }
         
         # Insert the Bitcoin news into the database
         try:
             cursor = conn.cursor()
             for item in data:
-                cursor.execute('''
-                    INSERT INTO Bitcoin_News_Update (id, date, title)
-                    VALUES (%s, %s, %s)
-                    ON CONFLICT (id) DO NOTHING
-                ''', (item['id'], item['date'], item['title']))
+                # Debug print each item
+                print("Processing item:", item)
+                
+                # Check if 'date' and 'title' exist in the item
+                if 'date' in item and 'title' in item:
+                    cursor.execute('''
+                        INSERT INTO bitcoin_news_aws (date, title)
+                        VALUES (%s, %s)
+                        ON CONFLICT(date, title) DO NOTHING
+                    ''', (item['date'], item['title']))
+                else:
+                    print(f"Missing 'date' or 'title' in item: {item}")
+            
             conn.commit()
             cursor.close()
         except Exception as e:
             print(f'Error inserting Bitcoin data: {e}')
             conn.rollback()
+            return {
+                'statusCode': 500,
+                'body': json.dumps(f'Error inserting Bitcoin data: {e}')
+            }
         
         # Close the connection
         conn.close()
         
         return {
             'statusCode': 200,
-            'body': json.dumps('Data inserted successfully')
+            'body': json.dumps('Data inserted successfully well')
         }
     except Exception as e:
         print(f'Error in save_bitcoin_news: {e}')

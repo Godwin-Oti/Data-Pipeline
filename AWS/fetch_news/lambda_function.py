@@ -47,9 +47,9 @@ def fetch_bitcoin_news(event, context):
         'body': result
     }
 
-# Local testing (comment this section out before deployment)
-if __name__ == "__main__":
-    event = {}
-    context = {}
-    response = fetch_bitcoin_news(event, context)
-    print(response['body'])
+# This section is for testing the function locally
+#if __name__ == "__main__":
+   #event = {}
+   # context = {}
+    #response = fetch_bitcoin_news(event, context)
+    #print(response['body'])

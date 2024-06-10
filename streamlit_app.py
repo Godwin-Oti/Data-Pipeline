@@ -2,6 +2,7 @@ import streamlit as st
 from sqlalchemy import create_engine
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
 from dotenv import load_dotenv
 
 # Load environment variables
@@ -15,13 +16,13 @@ def get_connection():
 
 # Function to fetch bitcoin prices from Database
 def fetch_bitcoin_data(engine):
-    query = "SELECT * FROM Bitcoin_Prices_Update ORDER BY date"
+    query = "SELECT * FROM bitcoin_prices_update ORDER BY date"
     df = pd.read_sql_query(query, engine)
     return df
 
 # Function to fetch bitcoin news from Database
 def fetch_bitcoin_news(engine):
-    query = "SELECT * FROM Bitcoin_News_Update ORDER BY date"
+    query = "SELECT * FROM bitcoin_news_update ORDER BY date"
     df = pd.read_sql_query(query, engine)
     return df
 
@@ -61,3 +62,42 @@ st.plotly_chart(fig)
 # Displaying the dataframe with bitcoin news
 st.title("Bitcoin News")
 st.write(bitcoin_news_df)
+
+# Candlestick Chart
+fig_candlestick = go.Figure(data=[go.Candlestick(x=filtered_df['date'],
+                                                 open=filtered_df['open'],
+                                                 high=filtered_df['high'],
+                                                 low=filtered_df['low'],
+                                                 close=filtered_df['close'])])
+fig_candlestick.update_layout(title='Bitcoin Candlestick Chart', xaxis_title='Date', yaxis_title='Price')
+st.plotly_chart(fig_candlestick)
+
+# Volume Chart
+fig_volume = px.bar(filtered_df, x='date', y='volume', title='Bitcoin Trading Volume')
+st.plotly_chart(fig_volume)
+
+# Moving Averages
+filtered_df['MA20'] = filtered_df['close'].rolling(window=20).mean()
+filtered_df['MA50'] = filtered_df['close'].rolling(window=50).mean()
+fig_ma = px.line(filtered_df, x='date', y=['close', 'MA20', 'MA50'], title='Bitcoin Prices with Moving Averages')
+st.plotly_chart(fig_ma)
+
+# Statistical Summary
+st.title("Statistical Summary")
+st.write(filtered_df.describe())
+
+# Sentiment Analysis (assuming you have a sentiment column)
+#if 'sentiment' in filtered_df.columns:
+    #fig_sentiment = px.line(filtered_df, x='date', y='sentiment', title='Sentiment Over Time')
+    #st.plotly_chart(fig_sentiment)
+
+# Heatmap of Daily Returns
+filtered_df['daily_return'] = filtered_df['close'].pct_change()
+daily_returns = filtered_df.pivot_table(index=filtered_df['date'].dt.year, columns=filtered_df['date'].dt.day, values='daily_return')
+fig_heatmap = px.imshow(daily_returns, labels=dict(x="Day", y="Year", color="Daily Return"), title='Heatmap of Daily Returns')
+st.plotly_chart(fig_heatmap)
+
+# Correlation Matrix
+#correlation_matrix = filtered_df[['close', 'volume', 'sentiment']].corr()
+#fig_corr = px.imshow(correlation_matrix, text_auto=True, title='Correlation Matrix')
+#st.plotly_chart(fig_corr)
