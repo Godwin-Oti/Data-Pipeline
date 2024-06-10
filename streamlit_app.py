@@ -1,4 +1,4 @@
-import streamlit as st
+mport streamlit as st
 from sqlalchemy import create_engine
 import pandas as pd
 import plotly.express as px
@@ -22,9 +22,8 @@ def fetch_bitcoin_data(engine):
 
 # Function to fetch bitcoin news from Database
 def fetch_bitcoin_news(engine):
-    query = "SELECT date, title FROM bitcoin_news_update ORDER BY date"
+    query = "SELECT * FROM bitcoin_news_update ORDER BY date"
     df = pd.read_sql_query(query, engine)
-    df['date'] = pd.to_datetime(df['date'])  # Convert 'date' column to DateTime format
     return df
 
 # Get the database connection
