@@ -75,7 +75,7 @@ with tab1:
         """,
         unsafe_allow_html=True
     )
-    st.table(filtered_df[['date', 'title']])  
+    st.dataframe(filtered_df[['date', 'title']])  
 
 with tab2:
     # Candlestick Chart
