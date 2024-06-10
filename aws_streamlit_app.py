@@ -70,12 +70,12 @@ with tab1:
     st.markdown(
         """
         <style>
-        .dataframe { width: 1300px !important; }
+        .dataframe { width: 1500px !important; }
         </style>
         """,
         unsafe_allow_html=True
     )
-    st.dataframe(filtered_df[['date', 'title']])  
+    st.table(filtered_df[['date', 'title']])  
 
 with tab2:
     # Candlestick Chart
