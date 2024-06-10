@@ -103,6 +103,12 @@ with tab3:
     fig_heatmap = px.imshow(daily_returns, labels=dict(x="Day", y="Year", color="Daily Return"))
     st.plotly_chart(fig_heatmap)
 
+
+    #Sentiment Analysis (assuming you have a sentiment column)
+    #st.subheader("Sentiment Over Time")
+    #fig_sentiment = px.line(filtered_df, x='date', y='sentiment')
+    #st.plotly_chart(fig_sentiment)
+
     # Correlation Matrix
     # Uncomment if sentiment data is available
     # st.subheader("Correlation Matrix")
