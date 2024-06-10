@@ -51,7 +51,7 @@ date_range = st.sidebar.slider("Select Date Range", min_date, max_date, (min_dat
 filtered_df = merged_df[(merged_df['date'] >= pd.to_datetime(date_range[0])) & (merged_df['date'] <= pd.to_datetime(date_range[1]))]
 
 # Main Dashboard
-st.title("Bitcoin Dashboard(Automated Data Pipeline)")
+st.title("Bitcoin Dashboard (Automated Data Pipeline)")
 
 # Tabs for organizing content
 tab1, tab2, tab3 = st.tabs(["Price Chart", "Candlestick Chart", "Additional Analysis"])
@@ -66,7 +66,7 @@ with tab1:
     
     # Displaying the dataframe with bitcoin news
     st.subheader("Bitcoin News")
-    st.write(filtered_df[['date', 'title']])
+    st.dataframe(filtered_df[['date', 'title']], height=600)  # Increased height to 600 pixels
 
 with tab2:
     # Candlestick Chart
@@ -103,11 +103,10 @@ with tab3:
     fig_heatmap = px.imshow(daily_returns, labels=dict(x="Day", y="Year", color="Daily Return"))
     st.plotly_chart(fig_heatmap)
 
-
-    #Sentiment Analysis (assuming you have a sentiment column)
-    #st.subheader("Sentiment Over Time")
-    #fig_sentiment = px.line(filtered_df, x='date', y='sentiment')
-    #st.plotly_chart(fig_sentiment)
+    # Sentiment Analysis (assuming you have a sentiment column)
+    # st.subheader("Sentiment Over Time")
+    # fig_sentiment = px.line(filtered_df, x='date', y='sentiment')
+    # st.plotly_chart(fig_sentiment)
 
     # Correlation Matrix
     # Uncomment if sentiment data is available

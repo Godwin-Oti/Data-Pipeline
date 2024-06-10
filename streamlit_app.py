@@ -65,8 +65,9 @@ with tab1:
     st.plotly_chart(fig)
     
     # Displaying the dataframe with bitcoin news
+    # Displaying the dataframe with bitcoin news
     st.subheader("Bitcoin News")
-    st.write(filtered_df[['date', 'title']])
+    st.dataframe(filtered_df[['date', 'title']], height=600)  # Increased height to 600 pixels
 
 with tab2:
     # Candlestick Chart
