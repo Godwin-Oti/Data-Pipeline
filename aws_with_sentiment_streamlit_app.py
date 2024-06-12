@@ -61,7 +61,7 @@ with tab1:
     st.subheader("Bitcoin Prices")
     fig = px.line(filtered_df, x='date', y='close', title='Bitcoin Prices', labels={'close': 'BTC Price'})
     fig.update_traces(mode='lines+markers', hovertemplate='<b>Date</b>: %{x}<br><b>Price</b>: %{y}<br><b>News</b>: %{customdata[0]}')
-    fig.update_traces(customdata=filtered_df[['title']].values)
+    fig.update_traces(customdata=filtered_df[['positive', 'negative', 'neutral']].values)
     st.plotly_chart(fig)
     
     # Displaying the dataframe with bitcoin news
