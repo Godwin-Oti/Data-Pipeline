@@ -77,7 +77,13 @@ with tab2:
                                                      low=filtered_df['low'],
                                                      close=filtered_df['close'])])
     fig_candlestick.update_layout(xaxis_title='Date', yaxis_title='Price')
+    
+    # Customize hovertemplate to include sentiment labels or scores as tooltips
+    fig_candlestick.update_traces(hovertemplate='<b>Date</b>: %{x}<br><b>Open</b>: %{open}<br><b>High</b>: %{high}<br><b>Low</b>: %{low}<br><b>Close</b>: %{close}<br><b>Positive Sentiment</b>: %{customdata[0]}<br><b>Negative Sentiment</b>: %{customdata[1]}<br><b>Neutral Sentiment</b>: %{customdata[2]}',
+                                  customdata=filtered_df[['positive', 'negative', 'neutral']].values)
+    
     st.plotly_chart(fig_candlestick)
+
 
     # Volume Chart
     st.subheader("Bitcoin Trading Volume")
