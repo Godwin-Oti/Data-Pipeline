@@ -88,7 +88,7 @@ with tab2:
 
     # Volume Chart
     st.subheader("Bitcoin Trading Volume")
-    fig_volume = px.bar(filtered_df, x='date', y='volume')
+    fig_volume = px.bar(filtered_df, x='date', y='volume', hover_data=['positive', 'negative', 'neutral'])
     st.plotly_chart(fig_volume)
 
 with tab3:
