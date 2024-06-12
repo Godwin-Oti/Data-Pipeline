@@ -99,28 +99,32 @@ with tab3:
                                       labels={'value': 'Sentiment Score', 'variable': 'Sentiment'})
     st.plotly_chart(fig_sentiment_dist)
 
-    # Sentiment and Price Correlation
+    # Sentiment and Price Correlation with Select Box
     st.subheader("Sentiment and Price Correlation")
-    fig_corr = px.scatter(filtered_df, x='close', y='positive', color='positive',
-                          title='Correlation Between Positive Sentiment and Bitcoin Price',
-                          labels={'close': 'Bitcoin Price', 'positive': 'Positive Sentiment Score'})
-    st.plotly_chart(fig_corr)
+    sentiment_option = st.selectbox("Select Sentiment Type", options=['positive', 'negative', 'neutral'], index=0)
+    if sentiment_option:
+        fig_corr = px.scatter(filtered_df, x='close', y=sentiment_option, color=sentiment_option,
+                              title=f'Correlation Between {sentiment_option.capitalize()} Sentiment and Bitcoin Price',
+                              labels={'close': 'Bitcoin Price', sentiment_option: f'{sentiment_option.capitalize()} Sentiment Score'})
+        st.plotly_chart(fig_corr)
 
-    # Sentiment Moving Average
-    st.subheader("Sentiment Moving Average")
-    filtered_df['MA20_sentiment'] = filtered_df['positive'].rolling(window=20).mean()
-    fig_ma_sentiment = px.line(filtered_df, x='date', y=['positive', 'MA20_sentiment'],
-                               title='Positive Sentiment Moving Average',
-                               labels={'value': 'Sentiment Score', 'variable': 'Sentiment'})
-    st.plotly_chart(fig_ma_sentiment)
+        # Sentiment Moving Average
+        st.subheader("Sentiment Moving Average")
+        filtered_df['MA20_sentiment'] = filtered_df[sentiment_option].rolling(window=20).mean()
+        fig_ma_sentiment = px.line(filtered_df, x='date', y=[sentiment_option, 'MA20_sentiment'],
+                                   title=f'{sentiment_option.capitalize()} Sentiment Moving Average',
+                                   labels={'value': 'Sentiment Score', 'variable': 'Sentiment'})
+        st.plotly_chart(fig_ma_sentiment)
 
-    # Sentiment Heatmap
-    st.subheader("Sentiment Heatmap")
-    sentiment_heatmap = filtered_df.pivot_table(index=filtered_df['date'].dt.year, 
-                                                columns=filtered_df['date'].dt.month, 
-                                                values='positive', fill_value=0)
-    fig_heatmap = px.imshow(sentiment_heatmap, labels=dict(x="Month", y="Year", color="Positive Sentiment"))
-    st.plotly_chart(fig_heatmap)
+        # Sentiment Heatmap
+        st.subheader("Sentiment Heatmap")
+        sentiment_heatmap = filtered_df.pivot_table(index=filtered_df['date'].dt.year, 
+                                                    columns=filtered_df['date'].dt.month, 
+                                                    values=sentiment_option, fill_value=0)
+        fig_heatmap = px.imshow(sentiment_heatmap, labels=dict(x="Month", y="Year", color=f"{sentiment_option.capitalize()} Sentiment"))
+        st.plotly_chart(fig_heatmap)
+    else:
+        st.error("No sentiment option selected. Please select a valid sentiment type.")
 
 with tab4:
     # Moving Averages
