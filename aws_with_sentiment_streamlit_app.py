@@ -60,9 +60,15 @@ with tab1:
     # Creating a Plotly line chart with tooltips for news
     st.subheader("Bitcoin Prices")
     fig = px.line(filtered_df, x='date', y='close', title='Bitcoin Prices', labels={'close': 'BTC Price'})
-    fig.update_traces(mode='lines+markers', hovertemplate='<b>Date</b>: %{x}<br><b>Price</b>: %{y}<br><b>News</b>: %{customdata[0]}')
+    
+    # Customize hovertemplate to include sentiment labels or scores as tooltips
+    hover_template = '<b>Date</b>: %{x}<br><b>Price</b>: %{y}<br><b>Positive Sentiment</b>: %{customdata[0]}<br><b>Negative Sentiment</b>: %{customdata[1]}<br><b>Neutral Sentiment</b>: %{customdata[2]}'
+    fig.update_traces(mode='lines+markers')
+    fig.update_layout(hovermode="x unified", hoverlabel=dict(bgcolor="white"), hovertemplate=hover_template)
     fig.update_traces(customdata=filtered_df[['positive', 'negative', 'neutral']].values)
+    
     st.plotly_chart(fig)
+
     
     # Displaying the dataframe with bitcoin news
     st.subheader("Bitcoin News")
@@ -79,10 +85,12 @@ with tab2:
     fig_candlestick.update_layout(xaxis_title='Date', yaxis_title='Price')
     
     # Customize hovertemplate to include sentiment labels or scores as tooltips
-    fig_candlestick.update_traces(hovertemplate='<b>Date</b>: %{x}<br><b>Open</b>: %{open}<br><b>High</b>: %{high}<br><b>Low</b>: %{low}<br><b>Close</b>: %{close}<br><b>Positive Sentiment</b>: %{customdata[0]}<br><b>Negative Sentiment</b>: %{customdata[1]}<br><b>Neutral Sentiment</b>: %{customdata[2]}',
-                                  customdata=filtered_df[['positive', 'negative', 'neutral']].values)
-    
+    hover_template = '<b>Date</b>: %{x}<br><b>Open</b>: %{open}<br><b>High</b>: %{high}<br><b>Low</b>: %{low}<br><b>Close</b>: %{close}<br><b>Positive Sentiment</b>: %{customdata[0]}<br><b>Negative Sentiment</b>: %{customdata[1]}<br><b>Neutral Sentiment</b>: %{customdata[2]}'
+    fig_candlestick.update_traces(customdata=filtered_df[['positive', 'negative', 'neutral']].values)
+    fig_candlestick.update_layout(hovermode="x unified", hoverlabel=dict(bgcolor="white"), hovertemplate=hover_template)
+
     st.plotly_chart(fig_candlestick)
+
 
 
     # Volume Chart
