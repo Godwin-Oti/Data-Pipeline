@@ -154,9 +154,4 @@ with tab4:
     fig_heatmap_returns = px.imshow(daily_returns, labels=dict(x="Day", y="Year", color="Daily Return"))
     st.plotly_chart(fig_heatmap_returns)
 
-    # Uncomment if sentiment data is available
-    # Correlation Matrix
-    # st.subheader("Correlation Matrix")
-    # correlation_matrix = filtered_df[['close', 'volume', 'positive', 'negative', 'neutral']].corr()
-    # fig_corr_matrix = px.imshow(correlation_matrix, text_auto=True)
-    # st.plotly_chart(fig_corr_matrix)
+    
