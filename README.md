@@ -149,7 +149,7 @@ To deploy this project as an AWS Lambda function:
 The project includes basic error handling for network requests and database operations. Errors are printed to the console and an appropriate status message is returned.
 
 ## License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](License) file for details.
 
 
 This README provides a comprehensive overview of your project, including setup instructions, function descriptions, usage examples, and deployment details, personalized to showcase your work on the project and its goal to analyze the correlation between news sentiment and Bitcoin prices.
